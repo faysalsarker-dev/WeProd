@@ -125,7 +125,7 @@ const Display = () => {
 </div>
     </div>
       </div>
-      <div className="grid xl:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-3">
+      <div className="grid xl:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-3 min-h-screen">
         {isLoading?(
           <>
           <CardPlacehoderSkeleton/>
@@ -138,33 +138,42 @@ const Display = () => {
         </>):(data?.data?.map((pd) => (
           <BookingCard key={pd._id} pd={pd} />
         )))}
+  {
+  data?.data?.length === 0 && (
+    <div className="flex justify-center items-center col-span-4"><h3 className="text-xl font-bold">No data available</h3></div>
+  )
+}
+
       </div>
-      <div className="flex justify-center mt-4">
-        <Button
-          variant="text"
-          className="flex items-center gap-2"
-          onClick={prev}
-          disabled={page === 1}
-        >
-          <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
-        </Button>
-        <div className="flex items-center gap-2">
-          {Array.from({ length: data?.totalPages }, (_, index) => (
-            <IconButton key={index + 1} {...getItemProps(index + 1)}>
-              {index + 1}
-            </IconButton>
-          ))}
-        </div>
-        <Button
-          variant="text"
-          className="flex items-center gap-2"
-          onClick={next}
-          disabled={page === data?.totalPages}
-        >
-          Next
-          <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
-        </Button>
-      </div>
+      {data?.totalPages > 0 && (
+  <div className="flex justify-center mt-4">
+    <Button
+      variant="text"
+      className="flex items-center gap-2"
+      onClick={prev}
+      disabled={page === 1}
+    >
+      <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
+    </Button>
+    <div className="flex items-center gap-2">
+      {Array.from({ length: data?.totalPages }, (_, index) => (
+        <IconButton key={index + 1} {...getItemProps(index + 1)}>
+          {index + 1}
+        </IconButton>
+      ))}
+    </div>
+    <Button
+      variant="text"
+      className="flex items-center gap-2"
+      onClick={next}
+      disabled={page === data?.totalPages}
+    >
+      Next
+      <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
+    </Button>
+  </div>
+)}
+
     </div>
   );
 };
