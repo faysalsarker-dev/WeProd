@@ -1,25 +1,22 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { BookingCard } from "../component/Card";
 import useAxios from "../Hooks/useAxios";
 import { useQuery } from "@tanstack/react-query";
-import { Button, Card, CardBody, CardFooter, CardHeader, IconButton, Input, Option, Select, Typography } from "@material-tailwind/react";
+import {
+  Button,
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  IconButton,
+  Input,
+  Option,
+  Select,
+  Typography,
+} from "@material-tailwind/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { DialogDefault } from "../component/PopUp";
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+import { useForm } from "react-hook-form";
 
 const Display = () => {
   const axiosCommon = useAxios();
@@ -31,9 +28,7 @@ const Display = () => {
   const [minimum, setMinimum] = useState("");
   const [brand, setBrand] = useState("");
   const [category, setCategory] = useState("");
-
-
-
+  const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
   const onChange = ({ target }) => setSearch(target.value);
 
@@ -72,8 +67,18 @@ const Display = () => {
     refetch();
   };
 
-  const onFilter = () => {
-    console.log('Filter applied with values:', { page, queryKey, value, category, minimum, maximum, brand });
+const handleReset=()=>{
+  setMaximum('');
+  setMinimum('');
+  setBrand('');
+  setCategory('');
+  reset();
+}
+  const onSubmit = (data) => {
+    setMaximum(data.maximum);
+    setMinimum(data.minimum);
+    setBrand(data.brand);
+    setCategory(data.category);
     refetch();
   };
 
@@ -82,7 +87,7 @@ const Display = () => {
       <div className="relative flex w-full mt-5">
         <Input
           type="text"
-          label="type here"
+          label="Type here"
           value={search}
           onChange={onChange}
           className="pr-20"
@@ -99,93 +104,93 @@ const Display = () => {
           Search
         </Button>
       </div>
-      <div>
+
       <div className="flex gap-4 items-center my-2">
-<div className="flex-1">
-        <Select label="Sorting By Price"
-          value={value}
-          onChange={(val) =>{ setValue(val),refetch()}}>
-          <Option value="Low to High">Low to High</Option>
-          <Option value="High to Low">High to Low</Option>
-          
-        </Select>
-</div>
-<div>
-  <DialogDefault
-       setMaxium={setMaximum}
-       setMinimum={setMinimum}
-       setBrand={setBrand}
-       setCategory={setCategory}
-       maxiumValue={maximum}
-       minimumValue={minimum}
-       brandValue={brand}
-       categoryValue={category}
-       onFilter={onFilter}
-  />
-</div>
-    </div>
+        <div className="flex-1">
+          <Select
+            label="Sorting By Price"
+            value={value}
+            onChange={(val) => {
+              setValue(val);
+              refetch();
+            }}
+          >
+            <Option value="Low to High">Low to High</Option>
+            <Option value="High to Low">High to Low</Option>
+          </Select>
+        </div>
+
+        <div>
+          <DialogDefault
+            maxiumValue={maximum}
+            minimumValue={minimum}
+            brandValue={brand}
+            categoryValue={category}
+            handleReset={handleReset}
+            register={register}
+            handleSubmit={handleSubmit}
+            onSubmit={onSubmit}
+          />
+        </div>
       </div>
+
       <div className="grid xl:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-3 min-h-screen">
-        {isLoading?(
+        {isLoading ? (
           <>
-          <CardPlacehoderSkeleton/>
-          <CardPlacehoderSkeleton/>
-          <CardPlacehoderSkeleton/>
-          <CardPlacehoderSkeleton/>
-          <CardPlacehoderSkeleton/>
-          <CardPlacehoderSkeleton/>
-        
-        </>):(data?.data?.map((pd) => (
-          <BookingCard key={pd._id} pd={pd} />
-        )))}
-  {
-  data?.data?.length === 0 && (
-    <div className="flex justify-center items-center col-span-4"><h3 className="text-xl font-bold">No data available</h3></div>
-  )
-}
-
+            <CardPlacehoderSkeleton />
+            <CardPlacehoderSkeleton />
+            <CardPlacehoderSkeleton />
+            <CardPlacehoderSkeleton />
+            <CardPlacehoderSkeleton />
+            <CardPlacehoderSkeleton />
+          </>
+        ) : (
+          data?.data?.map((pd) => <BookingCard key={pd._id} pd={pd} />)
+        )}
+        {data?.data?.length === 0 && (
+          <div className="flex justify-center items-center col-span-4">
+            <h3 className="text-xl font-bold">No data available</h3>
+          </div>
+        )}
       </div>
-      {data?.totalPages > 0 && (
-  <div className="flex justify-center mt-4">
-    <Button
-      variant="text"
-      className="flex items-center gap-2"
-      onClick={prev}
-      disabled={page === 1}
-    >
-      <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
-    </Button>
-    <div className="flex items-center gap-2">
-      {Array.from({ length: data?.totalPages }, (_, index) => (
-        <IconButton key={index + 1} {...getItemProps(index + 1)}>
-          {index + 1}
-        </IconButton>
-      ))}
-    </div>
-    <Button
-      variant="text"
-      className="flex items-center gap-2"
-      onClick={next}
-      disabled={page === data?.totalPages}
-    >
-      Next
-      <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
-    </Button>
-  </div>
-)}
 
+      {data?.totalPages > 0 && (
+        <div className="flex justify-center mt-4">
+          <Button
+            variant="text"
+            className="flex items-center gap-2"
+            onClick={prev}
+            disabled={page === 1}
+          >
+            <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
+          </Button>
+          <div className="flex items-center gap-2">
+            {Array.from({ length: data?.totalPages }, (_, index) => (
+              <IconButton key={index + 1} {...getItemProps(index + 1)}>
+                {index + 1}
+              </IconButton>
+            ))}
+          </div>
+          <Button
+            variant="text"
+            className="flex items-center gap-2"
+            onClick={next}
+            disabled={page === data?.totalPages}
+          >
+            Next
+            <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
 
 export default Display;
 
-
-
- 
- function CardPlacehoderSkeleton() {
+function CardPlacehoderSkeleton() {
   return (
-    <Card className="mt-6  animate-pulse">
+    <Card className="mt-6 animate-pulse">
       <CardHeader
         shadow={false}
         floated={false}
@@ -244,13 +249,7 @@ export default Display;
         </Typography>
       </CardBody>
       <CardFooter className="pt-0">
-        <Button
-          disabled
-          tabIndex={-1}
-          className="h-8 w-20 bg-gray-300 shadow-none hover:shadow-none"
-        >
-          &nbsp;
-        </Button>
+        <div className="h-8 w-28 rounded-full bg-gray-300" />
       </CardFooter>
     </Card>
   );
