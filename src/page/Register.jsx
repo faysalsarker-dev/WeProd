@@ -113,7 +113,7 @@ export function Register() {
           </div>
 
           <Button disabled={loading} onClick={handleGoogle} className="w-full flex items-center justify-center gap-2 mt-4 border border-gray-300 rounded-full py-2">
-            <img className="w-6" src="https://i.ibb.co/3ShjXGS/google.png" alt="Google" />
+            
             <span>Sign in with Google</span>
           </Button>
         </form>

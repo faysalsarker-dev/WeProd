@@ -130,16 +130,10 @@ const Login = () => {
           </div>
         </form>
         <div className="flex justify-center gap-2 ">
-          <button className="w-full" disabled={loading} loading={loading} onClick={handleGoogle}>
-            <div className="flex justify-center gap-4 items-center  px-3 rounded-full border-black border py-3">
-              <img
-                className=" w-6"
-                src="https://i.ibb.co/3ShjXGS/google.png"
-                alt="google"
-              />
-              Google
-            </div>
-          </button>
+        <Button disabled={loading} onClick={handleGoogle} className="w-full flex items-center justify-center gap-2 mt-4 border border-gray-300 rounded-full py-2">
+            
+            <span>Sign in with Google</span>
+          </Button>
         
         </div>
       </Card>

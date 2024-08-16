@@ -11,7 +11,7 @@ import {
    
   export function BookingCard({pd}) {
     return (
-      <Card className="w-full max-w-[26rem] shadow-lg">
+      <Card className="w-full max-w-[26rem] hover:scale-105 transform ease-in duration-300 shadow-lg">
         <CardHeader floated={false} color="blue-gray">
           <img
             src={pd.productImage}
@@ -64,11 +64,7 @@ import {
           </Typography>
        
         </CardBody>
-        <CardFooter className="pt-3">
-          <Button color="primary" size="lg" fullWidth={true}>
-            add to Cart
-          </Button>
-        </CardFooter>
+      
       </Card>
     );
   }

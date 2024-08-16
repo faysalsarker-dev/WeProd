@@ -38,6 +38,7 @@ const Display = () => {
       const response = await axiosCommon.get(
         `/product?page=${page}&search=${queryKey}&sort=${value}&brand=${brand}&category=${category}&minimum=${minimum}&maximum=${maximum}`
       );
+      
       return response.data;
     },
     keepPreviousData: true,
@@ -54,10 +55,9 @@ const Display = () => {
     if (page === 1) return;
     handlePageChange(page - 1);
   };
-
   const getItemProps = (index) => ({
     variant: page === index ? "filled" : "text",
-    color: "gray",
+    className: page === index ? "bg-primary text-white" : "bg-gray-200 text-gray-700",
     onClick: () => handlePageChange(index),
   });
 
@@ -73,6 +73,7 @@ const handleReset=()=>{
   setBrand('');
   setCategory('');
   reset();
+  refetch()
 }
   const onSubmit = (data) => {
     setMaximum(data.maximum);
@@ -149,13 +150,13 @@ const handleReset=()=>{
         )}
         {data?.data?.length === 0 && (
           <div className="flex justify-center items-center col-span-4">
-            <h3 className="text-xl font-bold">No data available</h3>
+            <h3 className="text-2xl font-bold">No data available</h3>
           </div>
         )}
       </div>
 
       {data?.totalPages > 0 && (
-        <div className="flex justify-center mt-4">
+        <div className="flex justify-center mt-6">
           <Button
             variant="text"
             className="flex items-center gap-2"
