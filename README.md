@@ -42,8 +42,8 @@ Weprod is a Fullstack functionality-based Single Page Application (SPA) that pro
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/faysalsarker-dev/Weprod-backend.git
-    cd Weprod-backend
+    git clone https://github.com/faysalsarker-dev/WeProd.git
+    cd WeProd
     ```
 
 2. Install the necessary dependencies:
