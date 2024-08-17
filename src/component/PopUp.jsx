@@ -7,18 +7,21 @@ import {
   DialogFooter,
   Input,
   Typography,
+  Select,
+  Option,
 } from "@material-tailwind/react";
+import { Controller } from "react-hook-form";
 
 export function DialogDefault({
   onSubmit,
   register,
   handleSubmit,
-  handleReset
+  handleReset,
+  control
 }) {
   const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => setOpen(!open);
-  
 
   return (
     <>
@@ -45,44 +48,92 @@ export function DialogDefault({
       <Dialog
         open={open}
         handler={handleOpen}
-        className="bg-white shadow-lg rounded-lg p-6"
+        className="bg-white shadow-lg rounded-lg p-6 max-w-lg mx-auto"
       >
+          
         <form onSubmit={handleSubmit(onSubmit)}>
           <DialogHeader className="text-2xl font-semibold text-gray-800">
             Filter Products
           </DialogHeader>
           <DialogBody className="space-y-4 relative">
-            <div className="absolute -top-16 right-0">
+                    <div className="absolute -top-16 right-0">
               <button onClick={handleReset}><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
   <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
 </svg>
 </button>
             </div>
             <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
-              <div>
-                <Typography className="mb-1 font-medium text-gray-700">
-                  Brand Name
-                </Typography>
-                <Input
-                  {...register("brand")}
-                  size="lg"
-                  placeholder="Enter brand name (e.g., Nike, Apple)"
-                  className="w-full"
+              <div className="flex-1">
+                <Controller
+                  name="brand"
+                  control={control}
+                  defaultValue=""
+                  render={({ field }) => (
+                    <Select label="Brand" {...field} className="w-full">
+                      <Option value="Apple">Apple</Option>
+                      <Option value="Samsung">Samsung</Option>
+                      <Option value="Sony">Sony</Option>
+                      <Option value="Microsoft">Microsoft</Option>
+                      <Option value="Asus">Asus</Option>
+                      <Option value="Dell">Dell</Option>
+                      <Option value="HP">HP</Option>
+                      <Option value="Google">Google</Option>
+                      <Option value="Bose">Bose</Option>
+                      <Option value="Amazon">Amazon</Option>
+                      <Option value="Canon">Canon</Option>
+                      <Option value="Nikon">Nikon</Option>
+                      <Option value="Garmin">Garmin</Option>
+                      <Option value="Fitbit">Fitbit</Option>
+                      <Option value="OnePlus">OnePlus</Option>
+                      <Option value="Lenovo">Lenovo</Option>
+                      <Option value="Razer">Razer</Option>
+                      <Option value="Nintendo">Nintendo</Option>
+                      <Option value="Dyson">Dyson</Option>
+                      <Option value="LG">LG</Option>
+                      <Option value="GoPro">GoPro</Option>
+                      <Option value="Roku">Roku</Option>
+                      <Option value="Corsair">Corsair</Option>
+                      <Option value="HyperX">HyperX</Option>
+                      <Option value="Anker">Anker</Option>
+                    </Select>
+                  )}
                 />
               </div>
-              <div>
-                <Typography className="mb-1 font-medium text-gray-700">
-                  Category Name
-                </Typography>
-                <Input
-                  {...register("category")}
-                  size="lg"
-                  placeholder="Enter category (e.g., Electronics, Clothing)"
-                  className="w-full"
+
+              <div className="flex-1">
+                <Controller
+                  name="category"
+                  control={control}
+                  defaultValue=""
+                  render={({ field }) => (
+                    <Select label="Category" {...field} className="w-full">
+                      <Option value="Smartphone">Smartphone</Option>
+                      <Option value="Laptop">Laptop</Option>
+                      <Option value="Camera">Camera</Option>
+                      <Option value="Gaming Console">Gaming Console</Option>
+                      <Option value="Home Appliance">Home Appliance</Option>
+                      <Option value="Television">Television</Option>
+                      <Option value="Tablet">Tablet</Option>
+                      <Option value="Smart Speaker">Smart Speaker</Option>
+                      <Option value="Smart Display">Smart Display</Option>
+                      <Option value="Fitness Tracker">Fitness Tracker</Option>
+                      <Option value="Action Camera">Action Camera</Option>
+                      <Option value="Wireless Earbuds">Wireless Earbuds</Option>
+                      <Option value="Monitor">Monitor</Option>
+                      <Option value="Streaming Device">Streaming Device</Option>
+                      <Option value="Speaker">Speaker</Option>
+                      <Option value="Keyboard">Keyboard</Option>
+                      <Option value="Smartwatch">Smartwatch</Option>
+                      <Option value="Headset">Headset</Option>
+                      <Option value="Storage">Storage</Option>
+                      <Option value="Portable Charger">Portable Charger</Option>
+                    </Select>
+                  )}
                 />
               </div>
             </div>
-            <div className="text-center">
+
+            <div className="text-center mt-4">
               <Typography className="text-lg font-semibold text-gray-800">
                 Price Range
               </Typography>
@@ -126,11 +177,11 @@ export function DialogDefault({
               <span>Cancel</span>
             </Button>
             <Button
+            onClick={handleOpen}
               type="submit"
               variant="filled"
               color="green"
               className="bg-green-500 hover:bg-green-600"
-              onClick={handleOpen}
             >
               <span>Apply Filters</span>
             </Button>
