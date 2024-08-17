@@ -17,7 +17,7 @@ export function DialogDefault({
   register,
   handleSubmit,
   handleReset,
-  control
+  control,
 }) {
   const [open, setOpen] = React.useState(false);
 
@@ -48,26 +48,26 @@ export function DialogDefault({
       <Dialog
         open={open}
         handler={handleOpen}
-        className="bg-white shadow-lg rounded-lg p-6 max-w-lg mx-auto"
+        className="bg-white shadow-lg rounded-lg p-6 max-w-lg mx-auto relative"
       >
-          
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <DialogHeader className="text-2xl font-semibold text-gray-800">
-            Filter Products
-          </DialogHeader>
-          <DialogBody className="space-y-4 relative">
-                    <div className="absolute -top-16 right-0">
+                       <div className="absolute top-4 right-4">
               <button onClick={handleReset}><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
   <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
 </svg>
 </button>
-            </div>
+            </div> 
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <DialogHeader className="text-2xl font-semibold text-gray-800">
+            Filter Products
+          </DialogHeader>
+          <DialogBody className="space-y-4 ">
+      
             <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
               <div className="flex-1">
                 <Controller
                   name="brand"
                   control={control}
-                  defaultValue=""
+                  defaultValue=''
                   render={({ field }) => (
                     <Select label="Brand" {...field} className="w-full">
                       <Option value="Apple">Apple</Option>
@@ -104,7 +104,7 @@ export function DialogDefault({
                 <Controller
                   name="category"
                   control={control}
-                  defaultValue=""
+               defaultValue=''
                   render={({ field }) => (
                     <Select label="Category" {...field} className="w-full">
                       <Option value="Smartphone">Smartphone</Option>

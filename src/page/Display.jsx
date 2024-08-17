@@ -28,7 +28,7 @@ const Display = () => {
   const [minimum, setMinimum] = useState("");
   const [brand, setBrand] = useState("");
   const [category, setCategory] = useState("");
-  const { register, handleSubmit, formState: { errors }, reset, control } = useForm();
+  const { register, handleSubmit, formState: { errors }, reset, control,resetField } = useForm();
 
   const onChange = ({ target }) => setSearch(target.value);
 
@@ -68,6 +68,8 @@ const Display = () => {
   };
 
 const handleReset=()=>{
+  resetField("brand");
+  resetField("category");
   setMaximum('');
   setMinimum('');
   setBrand('');
@@ -125,10 +127,6 @@ const handleReset=()=>{
 
         <div>
           <DialogDefault
-            maxiumValue={maximum}
-            minimumValue={minimum}
-            brandValue={brand}
-            categoryValue={category}
             handleReset={handleReset}
             register={register}
             handleSubmit={handleSubmit}
