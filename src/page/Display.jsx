@@ -29,7 +29,9 @@ const Display = () => {
   const [brand, setBrand] = useState("");
   const [category, setCategory] = useState("");
   const { register, handleSubmit, formState: { errors }, reset, control,resetField } = useForm();
+  const [open, setOpen] = React.useState(false);
 
+  const handleOpen = () => setOpen(!open);
   const onChange = ({ target }) => setSearch(target.value);
 
   const { data, isLoading, refetch } = useQuery({
@@ -132,6 +134,8 @@ const handleReset=()=>{
             handleSubmit={handleSubmit}
             onSubmit={onSubmit}
             control={control}
+            handleOpen={handleOpen}
+            open={open}
           />
         </div>
       </div>

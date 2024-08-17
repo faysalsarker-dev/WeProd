@@ -18,10 +18,10 @@ export function DialogDefault({
   handleSubmit,
   handleReset,
   control,
+  handleOpen,
+  open
 }) {
-  const [open, setOpen] = React.useState(false);
 
-  const handleOpen = () => setOpen(!open);
 
   return (
     <>
